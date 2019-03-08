@@ -116,15 +116,18 @@ def ReadZip():
     55128, # Oakdale
     55125 # Stillwater
     ]
-    
-    extracted_data = []
-    
+       
     counter = 0
     
     for i in ZipList:
         counter = counter + 1
         print("Processing: " + str(i))
-        extracted_data.append(Parse_Zillow(i))
+        
+	if counter == 1:
+            extracted_data = pd.DataFrame(Parse_Zillow(i))
+        else:
+            extracted_data =  extracted_data.append(Parse_Zillow(i), ignore_index = True)
+	
         print(str(int((counter / len(ZipList)) * 100)) + "% done.")
         sleep(3)
            
